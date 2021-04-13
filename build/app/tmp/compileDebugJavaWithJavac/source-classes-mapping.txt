@@ -1,0 +1,4 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/example/note_illustrator/BuildConfig.java
+ com.example.note_illustrator.BuildConfig

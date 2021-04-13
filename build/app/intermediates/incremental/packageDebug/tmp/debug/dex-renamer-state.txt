@@ -1,0 +1,4 @@
+#Tue Apr 13 17:14:48 CEST 2021
+base.0=D\:\\Mobile-Project\\Note Illustrator\\Note-Illustrator\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
