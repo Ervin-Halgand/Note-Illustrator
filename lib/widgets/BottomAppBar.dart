@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:note_illustrator/constants/appConstant.dart';
 import 'package:note_illustrator/constants/bottomAppBar.dart';
 import 'package:note_illustrator/routes/router.dart' as router;
 
@@ -35,9 +34,10 @@ class BottomAppBarWidget extends StatelessWidget {
                 iconSize: kIconSize + 25,
                 icon: Icon(
                   Icons.add_circle_rounded,
-                  color: kPrimaryColor,
+                  color: Theme.of(context).primaryColor,
                 ),
-                onPressed: () => {}),
+                onPressed: () =>
+                    {Navigator.pushNamed(context, router.routesCreateNote)}),
             IconButton(
                 iconSize: kIconSize,
                 icon: Icon(Icons.calendar_today, color: kIconColor),
