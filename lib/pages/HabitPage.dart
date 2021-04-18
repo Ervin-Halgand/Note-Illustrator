@@ -11,6 +11,7 @@ class _HabitPageState extends State<HabitPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: BottomAppBarWidget(),
+        // body: Center(child: NotesPage()));
         body: Center(child: Text('Habit Page')));
   }
 }
