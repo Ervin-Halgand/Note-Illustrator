@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:note_illustrator/widgets/BottomAppBar.dart';
 import 'package:flappy_search_bar/flappy_search_bar.dart';
-// import '../widgets/Notes.dart';
+import '../widgets/Notes.dart';
 
 class DashBoardPage extends StatefulWidget {
   @override
@@ -13,8 +13,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
 	Widget build(BuildContext context) {
 		return Scaffold(
 			bottomNavigationBar: BottomAppBarWidget(),
-			body: Center(child: Text('hello')));
-			// body: Center(child: NotesPage()));
+			// body: Center(child: Text('hello')));
+			body: Center(child: NotesPage()));
 		// 	body: Center(
 		// 		child: Column(
 		// 			mainAxisAlignment: MainAxisAlignment.spaceEvenly,

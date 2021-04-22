@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: theme,
+      debugShowCheckedModeBanner: false,
       title: 'Note Illustrator',
       home: HomePage(),
       initialRoute: router.routesHomePage,
