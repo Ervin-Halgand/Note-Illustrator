@@ -5,7 +5,7 @@ import 'package:flappy_search_bar/flappy_search_bar.dart';
 import './NotesPage.dart';
 
 class NotesPage extends StatefulWidget {
-  NotesPage({Key key}) : super(key: key);
+  NotesPage({Key? key}) : super(key: key);
 
   @override
   _NotesPageState createState() => _NotesPageState();
@@ -13,13 +13,6 @@ class NotesPage extends StatefulWidget {
 
 class _NotesPageState extends State<NotesPage> {
   var _formKey = GlobalKey<FormState>();
-  @override
-  void initState() {
-    super.initState();
-    notesDescriptionMaxLenth =
-        notesDescriptionMaxLines * notesDescriptionMaxLines;
-  }
-
   @override
   void dispose() {
     noteDescriptionController.dispose();
@@ -41,7 +34,7 @@ class _NotesPageState extends State<NotesPage> {
           : Center(child: Text("Add Notes...")),
       floatingActionButton: FloatingActionButton(
         mini: false,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Color(0xff29c0e7),
         onPressed: () {
           _settingModalBottomSheet(context);
         },
@@ -71,7 +64,7 @@ class _NotesPageState extends State<NotesPage> {
                   deletedNoteDescription = noteDescription[index];
                   noteHeading.removeAt(index);
                   noteDescription.removeAt(index);
-                  Scaffold.of(context).showSnackBar(
+                  ScaffoldMessenger.of(context).showSnackBar(
                     new SnackBar(
                       backgroundColor: Colors.purple,
                       content: Row(
@@ -219,6 +212,23 @@ class _NotesPageState extends State<NotesPage> {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 2.5,
+                      ),
+                      Flexible(
+                        child: Container(
+                          height: double.infinity,
+                          child: AutoSizeText(
+                            "${(noteDate[index])}",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 15.00,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -269,7 +279,7 @@ class _NotesPageState extends State<NotesPage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              if (_formKey.currentState.validate()) {
+                              if (_formKey.currentState!.validate()) {
                                 setState(() {
                                   noteHeading.add(noteHeadingController.text);
                                   noteDescription
@@ -277,10 +287,10 @@ class _NotesPageState extends State<NotesPage> {
                                   noteHeadingController.clear();
                                   noteDescriptionController.clear();
                                 });
+                                print(noteHeading);
                                 Navigator.pop(context);
                               }
-                              print("Notes.dart LineNo:239");
-                              print(noteHeadingController.text);
+                              // print(noteHeadingController.text);
                             },
                             child: Container(
                               child: Row(
@@ -315,12 +325,13 @@ class _NotesPageState extends State<NotesPage> {
                           ),
                           prefixIcon: Icon(Icons.text_fields),
                         ),
-                        validator: (String noteHeading) {
-                          if (noteHeading.isEmpty) {
+                        validator: (String? noteHeading) {
+                          if (noteHeading!.isEmpty)
+                            // {
                             return "Please enter Note Heading";
-                          } else if (noteHeading.startsWith(" ")) {
-                            return "Please avoid whitespaces";
-                          }
+                          // } else if (noteHeading.startsWith(" ")) {
+                          //   return "Please avoid whitespaces";
+                          // }
                         },
                         onFieldSubmitted: (String value) {
                           FocusScope.of(context)
@@ -335,7 +346,7 @@ class _NotesPageState extends State<NotesPage> {
                           child: TextFormField(
                             focusNode: textSecondFocusNode,
                             maxLines: notesDescriptionMaxLines,
-                            maxLength: notesDescriptionMaxLenth,
+                            maxLength: 2000,
                             controller: noteDescriptionController,
                             decoration: InputDecoration(
                               border: OutlineInputBorder(),
@@ -346,12 +357,13 @@ class _NotesPageState extends State<NotesPage> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            validator: (String noteDescription) {
-                              if (noteDescription.isEmpty) {
+                            validator: (String? noteDescription) {
+                              if (noteDescription!.isEmpty)
+                                // {
                                 return "Please enter Note Desc";
-                              } else if (noteDescription.startsWith(" ")) {
-                                return "Please avoid whitespaces";
-                              }
+                              // } else if (noteDescription.startsWith(" ")) {
+                              //   return "Please avoid first letter as whitespaces";
+                              // }
                             },
                           ),
                         ),
