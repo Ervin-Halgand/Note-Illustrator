@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:note_illustrator/services/DataBase.dart';
 import 'package:note_illustrator/themes/Theme.dart';
 import 'pages/HomePage.dart';
 import 'routes/router.dart' as router;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  DataBase().openDataBase();
   runApp(MyApp());
 }
 

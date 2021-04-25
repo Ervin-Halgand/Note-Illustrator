@@ -9,6 +9,8 @@ final ThemeData theme = ThemeData(
             fontSize: 20.0, fontWeight: FontWeight.w900, color: Colors.black),
         headline2: TextStyle(
             fontSize: 18.0, fontWeight: FontWeight.w700, color: Colors.black),
+            headline3: TextStyle(
+            fontSize: 30.0, fontWeight: FontWeight.w900, color: Colors.black),
         subtitle1: TextStyle(
             fontSize: 12.0, fontWeight: FontWeight.bold, color: kIconColor),
         bodyText1: TextStyle(
