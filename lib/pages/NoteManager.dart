@@ -11,6 +11,7 @@ import 'package:note_illustrator/services/AudioRecorder.dart';
 import 'package:note_illustrator/services/DataBase.dart';
 import 'package:note_illustrator/widgets/DialogPhoto.dart';
 import 'package:path_provider/path_provider.dart';
+import '../widgets/NotesPage.dart';
 
 class NoteManager extends StatefulWidget {
   NotesModel note;
@@ -18,6 +19,12 @@ class NoteManager extends StatefulWidget {
   @override
   _NoteManagerState createState() => _NoteManagerState();
 }
+
+// final List<String> noteDescription = [];
+// final List<String> noteHeading = [];
+
+// TextEditingController noteHeadingController = new TextEditingController();
+// TextEditingController noteDescriptionController = new TextEditingController();
 
 class _NoteManagerState extends State<NoteManager> {
   AudioRecorder recorder = AudioRecorder();
@@ -63,6 +70,12 @@ class _NoteManagerState extends State<NoteManager> {
     Navigator.pop(context);
   }
 
+  DateTime date =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  String title;
+  String timestamp;
+  String description;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +87,18 @@ class _NoteManagerState extends State<NoteManager> {
                   Icons.save,
                   color: Colors.black,
                 ),
-                onPressed: saveNote)
+                onPressed: () => {
+                      timestamp =
+                          "${date.day.toString()}-${date.month.toString()}-${date.year.toString()}",
+                      setState(() {
+                        noteHeading.add(title);
+                        noteDescription.add(description);
+                        noteDate.add(timestamp);
+                      }),
+                      print(noteHeading),
+                      saveNote,
+                      Navigator.pop(context)
+                    })
           ],
           backgroundColor: Colors.transparent,
           elevation: 0.0,
