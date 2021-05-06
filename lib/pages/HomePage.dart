@@ -12,7 +12,7 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   bool _btnEnabled = false;
   String filesHomePage = 'assets/homePage.svg';
-  late Widget svg;
+  Widget svg;
 
   getSvg() {
     svg = SvgPicture.asset(filesHomePage, semanticsLabel: 'File Logo');
@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                     child: Form(
                         key: _formKey,
                         onChanged: () {
-                          Form.of(primaryFocus!.context!)!.save();
+                          Form.of(primaryFocus.context).save();
                         },
                         child: TextFormField(
                           decoration: const InputDecoration(
@@ -86,10 +86,10 @@ class _HomePageState extends State<HomePage> {
                                   color: Color(0xfff08f1c),
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold)),
-                          onSaved: (String? value) {
+                          onSaved: (String value) {
                             print('Value for field saved as "$value"');
                           },
-                          validator: (String? value) {
+                          validator: (String value) {
                             if (value != null &&
                                 value.isNotEmpty &&
                                 value != "") {
@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                             borderRadius: new BorderRadius.circular(10.0),
                           ),
                           primary: Theme.of(context).primaryColor),
-                      onPressed: () => _formKey.currentState!.validate()
+                      onPressed: () => _formKey.currentState.validate()
                           ? Navigator.pushNamed(context, routesDashBoardPage)
                           : null,
                       child: Padding(

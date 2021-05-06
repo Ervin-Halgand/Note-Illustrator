@@ -4,7 +4,7 @@ import 'package:note_illustrator/routes/router.dart' as router;
 
 class BottomAppBarWidget extends StatelessWidget {
   const BottomAppBarWidget({
-    Key? key,
+    Key key,
   }) : super(key: key);
 
   @override

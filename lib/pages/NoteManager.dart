@@ -90,13 +90,14 @@ class _NoteManagerState extends State<NoteManager> {
                 onPressed: () => {
                       timestamp =
                           "${date.day.toString()}-${date.month.toString()}-${date.year.toString()}",
-                      setState(() {
-                        noteHeading.add(title);
-                        noteDescription.add(description);
-                        noteDate.add(timestamp);
-                      }),
-                      print(noteHeading),
-                      saveNote,
+                      // setState(() {
+                      //   noteHeading.add(title);
+                      //   noteDescription.add(description);
+                      //   noteDate.add(timestamp);
+                      // }),
+                      print(note.timestamp),
+                      setState(() => note.timestamp = timestamp),
+                      saveNote(),
                       Navigator.pop(context)
                     })
           ],

@@ -5,7 +5,7 @@ import 'package:flappy_search_bar/flappy_search_bar.dart';
 import './NotesPage.dart';
 
 class NotesPage extends StatefulWidget {
-  NotesPage({Key? key}) : super(key: key);
+  NotesPage({Key key}) : super(key: key);
 
   @override
   _NotesPageState createState() => _NotesPageState();
@@ -279,7 +279,7 @@ class _NotesPageState extends State<NotesPage> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              if (_formKey.currentState!.validate()) {
+                              if (_formKey.currentState.validate()) {
                                 setState(() {
                                   noteHeading.add(noteHeadingController.text);
                                   noteDescription
@@ -325,8 +325,8 @@ class _NotesPageState extends State<NotesPage> {
                           ),
                           prefixIcon: Icon(Icons.text_fields),
                         ),
-                        validator: (String? noteHeading) {
-                          if (noteHeading!.isEmpty)
+                        validator: (String noteHeading) {
+                          if (noteHeading.isEmpty)
                             // {
                             return "Please enter Note Heading";
                           // } else if (noteHeading.startsWith(" ")) {
@@ -357,8 +357,8 @@ class _NotesPageState extends State<NotesPage> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            validator: (String? noteDescription) {
-                              if (noteDescription!.isEmpty)
+                            validator: (String noteDescription) {
+                              if (noteDescription.isEmpty)
                                 // {
                                 return "Please enter Note Desc";
                               // } else if (noteDescription.startsWith(" ")) {

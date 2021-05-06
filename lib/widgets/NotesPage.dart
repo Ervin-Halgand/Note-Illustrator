@@ -13,7 +13,7 @@ int notesDescriptionMaxLines = 1000;
 String deletedNoteHeading = "";
 String deletedNoteDescription = "";
 
-List<Color?> noteColor = [
+List<Color> noteColor = [
   Colors.pink[50],
   Colors.green[50],
   Colors.blue[50],
@@ -26,7 +26,7 @@ List<Color?> noteColor = [
   Colors.purple[50],
 ];
 
-List<Color?> noteMarginColor = [
+List<Color> noteMarginColor = [
   Colors.pink[300],
   Colors.green[300],
   Colors.blue[300],

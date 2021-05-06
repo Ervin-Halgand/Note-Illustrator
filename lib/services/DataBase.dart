@@ -12,7 +12,7 @@ class DataBase {
             onCreate: (db, version) {
       print("creted");
       return db.execute(
-        "CREATE TABLE notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, title TEXT, description TEXT, audioRecords TEXT, images TEXT)",
+        "CREATE TABLE notes(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, timestamp TEXT, title TEXT, description TEXT, audioRecords TEXT, images TEXT)",
       );
     }, version: 1);
   }
@@ -36,6 +36,7 @@ class DataBase {
       print(jsonDecode(maps[i]['audioRecords'])); */
       final NotesModel model = NotesModel(
           id: maps[i]['id'],
+          timestamp: maps[i]['timestamp'],
           title: maps[i]['title'],
           description: maps[i]['description'],
           images: jsonDecode(maps[i]['images']),
