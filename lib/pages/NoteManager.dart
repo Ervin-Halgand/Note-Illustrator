@@ -12,6 +12,7 @@ import 'package:note_illustrator/services/DataBase.dart';
 import 'package:note_illustrator/widgets/DialogPhoto.dart';
 import 'package:path_provider/path_provider.dart';
 import '../widgets/NotesPage.dart';
+import 'dart:developer' as developer;
 
 class NoteManager extends StatefulWidget {
   NotesModel note;
@@ -72,9 +73,9 @@ class _NoteManagerState extends State<NoteManager> {
 
   DateTime date =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  String title;
+  String title = "";
   String timestamp;
-  String description;
+  String description = "";
 
   @override
   Widget build(BuildContext context) {
@@ -90,14 +91,22 @@ class _NoteManagerState extends State<NoteManager> {
                 onPressed: () => {
                       timestamp =
                           "${date.day.toString()}-${date.month.toString()}-${date.year.toString()}",
-                      // setState(() {
-                      //   noteHeading.add(title);
-                      //   noteDescription.add(description);
-                      //   noteDate.add(timestamp);
-                      // }),
-                      print(note.timestamp),
-                      setState(() => note.timestamp = timestamp),
-                      saveNote(),
+                      if (note.title != null && note.description != null)
+                        {
+                          setState(() => note.timestamp = timestamp),
+                          saveNote(),
+                        }
+                      else if (note.title == null && note.description != null)
+                        {
+                          setState(() => {note.timestamp = timestamp, note.title = ""}),
+                          saveNote(),
+                        }
+                      else if (note.description == null && note.title != null)
+                        {
+                          note.description = "",
+                          setState(() => {note.timestamp = timestamp, note.description = ""}),
+                          saveNote(),
+                        },
                       Navigator.pop(context)
                     })
           ],

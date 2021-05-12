@@ -10,36 +10,6 @@ class ShowNote extends StatefulWidget {
   _ShowNoteState createState() => _ShowNoteState();
 }
 
-// Future getNoteDetails() async {
-//   List<NotesModel> noteList = await DataBase().notes();
-//   return noteList;
-// }
-
-// Widget noteWidget() {
-//   print('note snapshot data is: ');
-//   return FutureBuilder(
-//     builder: (context, note) {
-//       if (note.connectionState == ConnectionState.none &&
-//           note.hasData == null) {
-//         print('note snapshot data is: ${note.data}');
-//         return Container();
-//       }
-//       return ListView.builder(
-//         itemCount: note.data.length,
-//         itemBuilder: (context, index) {
-//           DataBase notes = note.data[index];
-//           return Column(
-//             children: <Widget>[
-//               // Widget to display the list of project
-//             ],
-//           );
-//         },
-//       );
-//     },
-//     future: getNoteDetails(),
-//   );
-// }
-
 class _ShowNoteState extends State<ShowNote> {
   @override
   Widget build(BuildContext context) {
@@ -158,65 +128,65 @@ class _ShowNoteState extends State<ShowNote> {
 
   Widget noteList(int index) {
     return ClipRRect(
-        borderRadius: BorderRadius.circular(5.5),
-        child: Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: noteColor[(index % noteColor.length).floor()],
-              borderRadius: BorderRadius.circular(5.5),
-            ),
-            height: 100,
-            child: Center(
-                child: Row(children: [
-              new Container(
-                color:
-                    noteMarginColor[(index % noteMarginColor.length).floor()],
-                width: 3.5,
-                height: double.infinity,
-              ),
-              Flexible(
-                  child: Padding(
-                      padding:
-                          const EdgeInsets.only(left: 10, right: 10, top: 10),
-                      child: new Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Flexible(
-                                child: Text(noteHeading[index],
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 20.00,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
-                                    ))),
-                            SizedBox(
-                              height: 2.5,
-                            ),
-                            Flexible(
-                                child: Container(
-                                    height: double.infinity,
-                                    child: Text("${(noteDescription[index])}",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 15.00,
-                                          color: Colors.black,
-                                        )))),
-                            SizedBox(
-                              height: 2.5,
-                            ),
-                            Flexible(
-                                child: Container(
-                                    height: double.infinity,
-                                    child: Text("${(noteDate[index])}",
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 15.00,
-                                          color: Colors.black,
-                                        ))))
-                          ])))
-            ]))));
-  }
+        // borderRadius: BorderRadius.circular(5.5),
+        // child: Container(
+        //     width: double.infinity,
+        //     decoration: BoxDecoration(
+        //       color: noteColor[(index % noteColor.length).floor()],
+        //       borderRadius: BorderRadius.circular(5.5),
+        //     ),
+        //     height: 100,
+        //     child: Center(
+        //         child: Row(children: [
+        //       new Container(
+        //         color:
+        //             noteMarginColor[(index % noteMarginColor.length).floor()],
+        //         width: 3.5,
+        //         height: double.infinity,
+        //       ),
+        //       Flexible(
+        //           child: Padding(
+        //               padding:
+        //                   const EdgeInsets.only(left: 10, right: 10, top: 10),
+        //               child: new Column(
+        //                   crossAxisAlignment: CrossAxisAlignment.start,
+        //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //                   children: [
+        //                     Flexible(
+        //                         child: Text(noteHeading[index],
+        //                             overflow: TextOverflow.ellipsis,
+        //                             style: TextStyle(
+        //                               fontSize: 20.00,
+        //                               color: Colors.black,
+        //                               fontWeight: FontWeight.w500,
+        //                             ))),
+        //                     SizedBox(
+        //                       height: 2.5,
+        //                     ),
+        //                     Flexible(
+        //                         child: Container(
+        //                             height: double.infinity,
+        //                             child: Text(noteDescription[index],
+        //                                 maxLines: 2,
+        //                                 overflow: TextOverflow.ellipsis,
+        //                                 style: TextStyle(
+        //                                   fontSize: 15.00,
+        //                                   color: Colors.black,
+        //                                 )))),
+        //                     SizedBox(
+        //                       height: 2.5,
+        //                     ),
+        //                     Flexible(
+        //                         child: Container(
+        //                             height: double.infinity,
+        //                             child: Text("${(noteDate[index])}",
+        //                                 maxLines: 2,
+        //                                 overflow: TextOverflow.ellipsis,
+        //                                 style: TextStyle(
+        //                                   fontSize: 15.00,
+        //                                   color: Colors.black,
+        //                                 ))))
+        //                   ])))
+        //     ]))));
+      );  }
 }

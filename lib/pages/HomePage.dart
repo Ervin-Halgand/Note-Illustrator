@@ -46,9 +46,6 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
         ),
         body: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.start,
-          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
               flex: 2,
@@ -61,12 +58,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            // Text('Username *',
-            //     textAlign: TextAlign.center,
-            //     style: TextStyle(
-            //         color: Color(0xfff08f1c),
-            //         fontSize: 16,
-            //         fontWeight: FontWeight.bold)),
             Expanded(
                 child: Align(
               alignment: Alignment.topLeft,
