@@ -75,37 +75,18 @@ class _DashBoardPageState extends State<DashBoardPage>
       builder: (context, note) {
         if (note.connectionState == ConnectionState.none &&
             note.hasData == null) {
-          // developer.log('note snapshot data is: ${note.data}',
-          //     name: 'DashboardPage');
           return Container();
         }
         if (note.data != null && !note.data.isEmpty)
           return GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
-            // itemCount: note.data.length,
-            // itemBuilder: (context, int index) {
-            // NotesModel notes = note.data[index];
-            // developer.log('la liste --> ${notes.title} ${notes.description}',
-            //     name: 'DashboardPage');
             children: List.generate(note.data.length, (index) {
               return Center(
                 child: noteList(note.data[index], index),
               );
             }),
           );
-        //     ListView.builder(
-        //       shrinkWrap: true,
-        //       itemCount: note.data.length,
-        //       itemBuilder: (context, int index) {
-        //         NotesModel notes = note.data[index];
-        //         // developer.log('la liste --> ${notes.title} ${notes.description}',
-        //         //     name: 'DashboardPage');
-        //         return Column(
-        //           children: <Widget>[noteList(notes, index)],
-        //         );
-        //       },
-        // );
         else
           return Center(child: Text("Add Notes..."));
       },
@@ -114,9 +95,6 @@ class _DashBoardPageState extends State<DashBoardPage>
   }
 
   Widget noteList(NotesModel note, int index) {
-    // developer.log(
-    //     'la liste --> ${note.title} ${note.description} ${note.timestamp}',
-    //     name: 'DashboardPage.noteList');
     return ClipRRect(
         borderRadius: BorderRadius.circular(5.5),
         child: Card(
