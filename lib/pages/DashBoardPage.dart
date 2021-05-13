@@ -1,15 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:note_illustrator/widgets/BottomAppBar.dart';
 import 'package:note_illustrator/services/DataBase.dart';
 import 'package:note_illustrator/models/NotesModel.dart';
-// import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'package:note_illustrator/widgets/Notes.dart';
-// import './NoteManager.dart';
-import 'package:note_illustrator/pages/ShowNote.dart';
+import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:note_illustrator/widgets/NotesPage.dart';
-import 'package:sqflite/sqflite.dart';
 import 'dart:developer' as developer;
 
 class DashBoardPage extends StatefulWidget {
@@ -52,15 +46,17 @@ class _DashBoardPageState extends State<DashBoardPage>
         ),
       ),
       body: SafeArea(
-        child: TabBarView(
-          controller: _tabController,
-          children: <Widget>[
-            Center(child: noteWidget()),
-            Center(
-              child: Text('It\'s rainy here'),
-            ),
-          ],
-        ),
+        child:
+            SearchBar(onSearch: (null), onItemFound: (null),),
+        //     TabBarView(
+        //   controller: _tabController,
+        //   children: <Widget>[
+        //     Center(child: noteWidget()),
+        //     Center(
+        //       child: Text('It\'s rainy here'),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }
@@ -127,7 +123,7 @@ class _DashBoardPageState extends State<DashBoardPage>
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 20.00,
-                                          color: Colors.black,
+                                          color: Color(0xff7e7e7e),
                                           fontWeight: FontWeight.w500,
                                         ))),
                                 SizedBox(
