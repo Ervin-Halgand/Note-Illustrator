@@ -5,6 +5,7 @@ import 'package:note_illustrator/pages/HabitPage.dart';
 import 'package:note_illustrator/pages/HomePage.dart';
 import 'package:note_illustrator/pages/NoteManager.dart';
 import 'package:note_illustrator/pages/SettingPage.dart';
+import 'package:note_illustrator/widgets/SearchBar.dart';
 
 const routesHomePage = '/';
 const routesSettingPage = '/setting';
@@ -22,7 +23,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case routesDashBoardPage:
       return PageRouteBuilder(
-          pageBuilder: (context, animation1, animation2) => DashBoardPage(),
+          pageBuilder: (context, animation1, animation2) => SearchBar(),
           transitionDuration: Duration(seconds: 0));
     case routesGalleryPage:
       return PageRouteBuilder(
