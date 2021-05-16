@@ -6,6 +6,7 @@ import 'package:note_illustrator/widgets/BottomAppBar.dart';
 import 'package:note_illustrator/services/DataBase.dart';
 import 'package:note_illustrator/models/NotesModel.dart';
 import 'package:note_illustrator/pages/FullScreenImage.dart';
+import 'package:note_illustrator/widgets/UserAppBar.dart';
 
 class GalleryPage extends StatefulWidget {
   @override
@@ -21,6 +22,10 @@ class _GalleryPageState extends State<GalleryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: UserAppBarWidget(saveEditable: false),
+        ),
         bottomNavigationBar: BottomAppBarWidget(),
         body: SafeArea(child: Center(child: imageWidget(context))));
   }

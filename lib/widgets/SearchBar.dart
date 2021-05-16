@@ -3,8 +3,10 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:note_illustrator/models/NotesModel.dart';
 import 'package:note_illustrator/pages/DashBoardPage.dart';
 import 'package:note_illustrator/services/DataBase.dart';
+import 'package:note_illustrator/widgets/NoteList.dart';
 import 'package:note_illustrator/widgets/NotesPage.dart';
 import 'package:note_illustrator/widgets/BottomAppBar.dart';
+import 'package:note_illustrator/widgets/UserAppBar.dart';
 
 class SearchBar extends StatefulWidget {
   @override
@@ -42,17 +44,6 @@ class _SearchBarState extends State<SearchBar> {
     noteSearchedList = noteList;
     return noteList;
   }
-
-  // List<NotesModel> searchNote(@required String filter) {
-  //   if (filter != null && filter.isNotEmpty) {
-  //     // Reversed because we want the last added items to appear first in the UI
-  //     return FutureBuilder(builder: (context, note) {
-  //       note.where((term) => term.startsWith(filter)).toList();
-  //     });
-  //   } else {
-  //     return noteList.toList();
-  //   }
-  // }
 
   void addSearchTerm(String term) {
     if (_searchHistory.contains(term)) {
@@ -96,8 +87,14 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomAppBarWidget(),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: UserAppBarWidget(saveEditable: false),
+      ),
       body: FloatingSearchBar(
         automaticallyImplyBackButton: false,
+        backgroundColor: Colors.white,
         builder: (context, transition) {
           return ClipRRect(
             // Navigator.pushReplacementNamed
@@ -156,6 +153,7 @@ class _SearchBarState extends State<SearchBar> {
                                 setState(() {
                                   putSearchTermFirst(term);
                                   selectedTerm = term;
+                                  getNoteSearched(term);
                                 });
                                 controller.close();
                               },
@@ -201,10 +199,8 @@ class _SearchBarState extends State<SearchBar> {
           controller.close();
         },
         controller: controller,
-        body: FloatingSearchBarScrollNotifier(
-          child: SearchResultsListView(
-            searchTerm: selectedTerm,
-          ),
+        body: SearchResultsListView(
+          searchTerm: selectedTerm,
         ),
       ),
     );
@@ -224,9 +220,9 @@ class SearchResultsListView extends StatelessWidget {
     if (searchTerm == null || searchTerm == "") {
       return Column(
         children: [
-          SizedBox(height: 55.0),
+          SizedBox(height: 60.0),
           SizedBox(
-              height: MediaQuery.of(context).size.height - 55,
+              height: MediaQuery.of(context).size.height - 220,
               child: DashBoardPage()),
         ],
       );
@@ -234,95 +230,28 @@ class SearchResultsListView extends StatelessWidget {
 
     // final fsb = FloatingSearchBar.of(context);
     if (noteSearchedList != null && noteSearchedList.isNotEmpty) {
-      return Scaffold(
-        bottomNavigationBar: BottomAppBarWidget(),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 55,
-            ),
-            GridView.count(
-              crossAxisCount: 2,
-              shrinkWrap: true,
-              children: List.generate(noteSearchedList.length, (index) {
-                return Center(
-                  child: noteList(noteSearchedList[index], index),
-                );
-              }),
-            ),
-          ],
-        ),
+      return Column(
+        children: [
+          SizedBox(
+            height: 55,
+          ),
+          GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            children: List.generate(noteSearchedList.length, (index) {
+              return Center(
+                child:
+                    NoteListWidget(note: noteSearchedList[index], index: index),
+              );
+            }),
+          ),
+        ],
       );
     } else
-      return Center(child: Text("Add Notes..."));
-  }
-
-  Widget noteList(NotesModel note, int index) {
-    return ClipRRect(
-        borderRadius: BorderRadius.circular(5.5),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          child: InkWell(
-            onTap: () {
-              print('Card tapped.');
-            },
-            child: Container(
-                width: 160,
-                height: 191,
-                decoration: BoxDecoration(
-                  color: noteColor[(index % noteColor.length).floor()],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                    child: Row(children: [
-                  Flexible(
-                      child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 10, right: 10, top: 10),
-                          child: new Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Flexible(
-                                    child: Text(note.title,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: 20.00,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w500,
-                                        ))),
-                                SizedBox(
-                                  height: 2.5,
-                                ),
-                                Flexible(
-                                    flex: 2,
-                                    child: Container(
-                                        height: double.infinity,
-                                        child: Text(note.description,
-                                            maxLines: 5,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 15.00,
-                                              color: Colors.black,
-                                            )))),
-                                SizedBox(
-                                  height: 2.5,
-                                ),
-                                Flexible(
-                                    child: Container(
-                                        height: double.infinity,
-                                        child: Text(note.timestamp,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: 12.00,
-                                              color: Colors.black,
-                                            ))))
-                              ])))
-                ]))),
-          ),
-        ));
+      return Center(
+          child: Text(
+              "It look like there aren't many great matches for your search",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              textAlign: TextAlign.center));
   }
 }

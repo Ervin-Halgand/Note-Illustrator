@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:note_illustrator/models/UserInfoModel.dart';
 import 'package:note_illustrator/services/DataBase.dart';
 import 'package:note_illustrator/widgets/BottomAppBar.dart';
+import 'package:note_illustrator/widgets/UserAppBar.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -50,24 +51,25 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
         appBar: AppBar(
           leading: new IconButton(
-              icon: new Icon(
-                Icons.save,
-                size: 35,
-              ),
-              onPressed: () => {
-                    DataBase().updateUser(user),
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          Future.delayed(Duration(seconds: 2), () {
-                            Navigator.of(context).pop(true);
-                          });
-                          return AlertDialog(
-                            backgroundColor: Theme.of(context).primaryColor,
-                            title: Center(child: Text('Updated')),
-                          );
-                        })
-                  }),
+            icon: new Icon(
+              Icons.save,
+              size: 35,
+            ),
+            onPressed: () => {
+              DataBase().updateUser(user),
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    Future.delayed(Duration(seconds: 2), () {
+                      Navigator.of(context).pop(true);
+                    });
+                    return AlertDialog(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      title: Center(child: Text('Updated')),
+                    );
+                  })
+            },
+          ),
           title: Align(
               alignment: Alignment.topRight,
               child: user != null ? Text(user.userName) : Text("")),
@@ -77,7 +79,8 @@ class _SettingPageState extends State<SettingPage> {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: Theme.of(context).cardColor,
+                  color: Colors.transparent,
+                  // color: Theme.of(context).cardColor,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
