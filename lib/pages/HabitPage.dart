@@ -4,7 +4,6 @@ import 'package:note_illustrator/services/DataBase.dart';
 import 'package:note_illustrator/models/NotesModel.dart';
 // import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:note_illustrator/widgets/NotesPage.dart';
-import 'package:sqflite/sqflite.dart';
 import 'dart:developer' as developer;
 
 class HabitPage extends StatefulWidget {
@@ -53,7 +52,7 @@ class _HabitPageState extends State<HabitPage> with TickerProviderStateMixin {
             }),
           );
         else
-          return Center(child: Text("Add Notes..."));
+          return Center(child: Text("Add Habits..."));
       },
       future: getNoteDetails(),
     );

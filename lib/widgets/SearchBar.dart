@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:note_illustrator/models/NotesModel.dart';
 import 'package:note_illustrator/pages/DashBoardPage.dart';
+import 'package:note_illustrator/services/DataBase.dart';
+import 'package:note_illustrator/widgets/NotesPage.dart';
 import 'package:note_illustrator/widgets/BottomAppBar.dart';
 
 class SearchBar extends StatefulWidget {
   @override
   _SearchBarState createState() => _SearchBarState();
 }
+
+List<NotesModel> noteSearchedList;
 
 class _SearchBarState extends State<SearchBar> {
   static const historyLength = 5;
@@ -31,6 +36,23 @@ class _SearchBarState extends State<SearchBar> {
       return _searchHistory.reversed.toList();
     }
   }
+
+  Future getNoteSearched(String filter) async {
+    List<NotesModel> noteList = await DataBase().notesSearched(filter);
+    noteSearchedList = noteList;
+    return noteList;
+  }
+
+  // List<NotesModel> searchNote(@required String filter) {
+  //   if (filter != null && filter.isNotEmpty) {
+  //     // Reversed because we want the last added items to appear first in the UI
+  //     return FutureBuilder(builder: (context, note) {
+  //       note.where((term) => term.startsWith(filter)).toList();
+  //     });
+  //   } else {
+  //     return noteList.toList();
+  //   }
+  // }
 
   void addSearchTerm(String term) {
     if (_searchHistory.contains(term)) {
@@ -158,23 +180,21 @@ class _SearchBarState extends State<SearchBar> {
         // Hint gets displayed once the search bar is tapped and opened
         hint: 'Search and find out...',
         actions: [
-          // FloatingSearchBarAction.searchToClear(),
-          // FloatingSearchBarAction.back(),
-          // FloatingSearchBarAction.icon(icon: Icons.history, onTap: (null)),
-          // FloatingSearchBarAction.hamburgerToBack()
+          FloatingSearchBarAction.searchToClear(),
         ],
         onQueryChanged: (query) {
           setState(() {
             filteredSearchHistory = filterSearchTerms(filter: query);
+            // getNoteSearched(query);
           });
         },
         onSubmitted: (query) {
           setState(() {
             if (query != "") {
               addSearchTerm(query);
-            }
-            else {
-              Navigator.of(context).pushNamed('');
+              getNoteSearched(query);
+            } else {
+              Navigator.of(context).pushNamed('/dashboard');
             }
             selectedTerm = query;
           });
@@ -205,21 +225,101 @@ class SearchResultsListView extends StatelessWidget {
       return Column(
         children: [
           SizedBox(height: 55.0),
-          SizedBox(height: MediaQuery.of(context).size.height - 55,
-            child: DashBoardPage()),
+          SizedBox(
+              height: MediaQuery.of(context).size.height - 55,
+              child: DashBoardPage()),
         ],
       );
     }
+
     // final fsb = FloatingSearchBar.of(context);
-    return ListView(
-      // padding: EdgeInsets.only(top: fsb.height + fsb.margins.vertical),
-      children: List.generate(
-        50,
-        (index) => ListTile(
-          title: Text('$searchTerm search result'),
-          subtitle: Text(index.toString()),
-        ),
-      ),
-    );
+    if (noteSearchedList != null && noteSearchedList.isNotEmpty) {
+      return Column(
+        children: [
+          SizedBox(
+            height: 55,
+          ),
+          GridView.count(
+            crossAxisCount: 2,
+            shrinkWrap: true,
+            children: List.generate(noteSearchedList.length, (index) {
+              return Center(
+                child: noteList(noteSearchedList[index], index),
+              );
+            }),
+          ),
+        ],
+      );
+    } else
+      return Center(child: Text("Add Notes..."));
+  }
+
+  Widget noteList(NotesModel note, int index) {
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(5.5),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: InkWell(
+            onTap: () {
+              print('Card tapped.');
+            },
+            child: Container(
+                width: 160,
+                height: 191,
+                decoration: BoxDecoration(
+                  color: noteColor[(index % noteColor.length).floor()],
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Center(
+                    child: Row(children: [
+                  Flexible(
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 10),
+                          child: new Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Flexible(
+                                    child: Text(note.title,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 20.00,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ))),
+                                SizedBox(
+                                  height: 2.5,
+                                ),
+                                Flexible(
+                                    flex: 2,
+                                    child: Container(
+                                        height: double.infinity,
+                                        child: Text(note.description,
+                                            maxLines: 5,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 15.00,
+                                              color: Colors.black,
+                                            )))),
+                                SizedBox(
+                                  height: 2.5,
+                                ),
+                                Flexible(
+                                    child: Container(
+                                        height: double.infinity,
+                                        child: Text(note.timestamp,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: 12.00,
+                                              color: Colors.black,
+                                            ))))
+                              ])))
+                ]))),
+          ),
+        ));
   }
 }
