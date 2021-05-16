@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_illustrator/pages/NoteEdit.dart';
 import 'package:note_illustrator/widgets/BottomAppBar.dart';
 import 'package:note_illustrator/services/DataBase.dart';
 import 'package:note_illustrator/models/NotesModel.dart';
@@ -11,8 +12,26 @@ class HabitPage extends StatefulWidget {
   @override
   _HabitPageState createState() => _HabitPageState();
 }
-const title= ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-const description = ["Monday description", "Tuesday description", "Wednesday description", "Thursday description", "Friday description", "Saturday description", "Sunday description"];
+
+const title = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+];
+const description = [
+  "Monday description",
+  "Tuesday description",
+  "Wednesday description",
+  "Thursday description",
+  "Friday description",
+  "Saturday description",
+  "Sunday description"
+];
+
 class _HabitPageState extends State<HabitPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
@@ -30,7 +49,7 @@ class _HabitPageState extends State<HabitPage> with TickerProviderStateMixin {
   }
 
   Future getNoteDetails() async {
-    List<NotesModel> noteList = await DataBase().notes();
+    List<NotesModel> noteList = await DataBase().habitNotes();
     return noteList;
   }
 
@@ -45,9 +64,9 @@ class _HabitPageState extends State<HabitPage> with TickerProviderStateMixin {
           return GridView.count(
             crossAxisCount: 2,
             shrinkWrap: true,
-            children: List.generate(7, (index) {
+            children: List.generate(note.data.length, (index) {
               return Center(
-                child: noteList(note.data[0], index),
+                child: noteList(note.data[index], index),
               );
             }),
           );
@@ -67,7 +86,15 @@ class _HabitPageState extends State<HabitPage> with TickerProviderStateMixin {
           ),
           child: InkWell(
             onTap: () {
-              print('Card tapped.');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NoteEditor(
+                        note: note,
+                        isDeletable: false,
+                        titleEditable: false,
+                        isHabit: true)),
+              );
             },
             child: Container(
                 width: 160,
@@ -87,7 +114,7 @@ class _HabitPageState extends State<HabitPage> with TickerProviderStateMixin {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Flexible(
-                                    child: Text(title[index],
+                                    child: Text(note.title,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                           fontSize: 20.00,
@@ -101,7 +128,7 @@ class _HabitPageState extends State<HabitPage> with TickerProviderStateMixin {
                                     flex: 2,
                                     child: Container(
                                         height: double.infinity,
-                                        child: Text(description[index],
+                                        child: Text(note.description,
                                             maxLines: 6,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
