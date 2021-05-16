@@ -4,9 +4,9 @@ import 'package:note_illustrator/themes/Theme.dart';
 import 'pages/HomePage.dart';
 import 'routes/router.dart' as router;
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  DataBase().openDataBase();
+  await DataBase().openDataBase();
   runApp(MyApp());
 }
 

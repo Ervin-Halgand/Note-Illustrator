@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:note_illustrator/models/UserInfoModel.dart';
 import 'package:note_illustrator/routes/router.dart';
 import 'package:note_illustrator/widgets/BottomAppBar.dart';
+import 'package:note_illustrator/services/DataBase.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,9 +15,17 @@ class _HomePageState extends State<HomePage> {
   bool _btnEnabled = false;
   String filesHomePage = 'assets/homePage.svg';
   Widget svg;
+  String userName= "";
 
   getSvg() {
     svg = SvgPicture.asset(filesHomePage, semanticsLabel: 'File Logo');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    DataBase().user().then((value) =>
+        {if (value != null) Navigator.pushNamed(context, routesDashBoardPage)});
   }
 
   @override
@@ -71,6 +81,7 @@ class _HomePageState extends State<HomePage> {
                           Form.of(primaryFocus.context).save();
                         },
                         child: TextFormField(
+                          onChanged: (value) => userName = value,
                           decoration: const InputDecoration(
                               labelText: 'Username',
                               labelStyle: TextStyle(
@@ -108,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           primary: Theme.of(context).primaryColor),
                       onPressed: () => _formKey.currentState.validate()
-                          ? Navigator.pushNamed(context, routesDashBoardPage)
+                          ? {DataBase().insertUser(UserInfoModel(userName: this.userName, image: "")), Navigator.pushNamed(context, routesDashBoardPage)}
                           : null,
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(

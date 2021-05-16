@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_illustrator/pages/NoteEdit.dart';
 import 'package:note_illustrator/widgets/BottomAppBar.dart';
 import 'package:note_illustrator/services/DataBase.dart';
 import 'package:note_illustrator/models/NotesModel.dart';
@@ -97,7 +98,15 @@ class _DashBoardPageState extends State<DashBoardPage>
           ),
           child: InkWell(
             onTap: () {
-              print('Card tapped.');
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => NoteEditor(
+                        note: note,
+                        isDeletable: true,
+                        titleEditable: true,
+                        isHabit: false)),
+              );
             },
             child: Container(
                 width: 160,
