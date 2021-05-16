@@ -5,9 +5,11 @@ import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:note_illustrator/components/ImageListView.dart';
 import 'package:note_illustrator/components/RecordListView.dart';
+import 'package:note_illustrator/constants/appConstant.dart';
 import 'package:note_illustrator/models/NotesModel.dart';
 import 'package:note_illustrator/services/AudioRecorder.dart';
 import 'package:note_illustrator/services/DataBase.dart';
+import 'package:note_illustrator/widgets/DialogColor.dart';
 import 'package:note_illustrator/widgets/DialogPhoto.dart';
 
 class NoteEditor extends StatefulWidget {
@@ -29,11 +31,12 @@ class NoteEditor extends StatefulWidget {
 class _NoteEditorState extends State<NoteEditor> {
   AudioRecorder recorder = AudioRecorder();
   AudioPlayer audioPlayer = AudioPlayer();
-  NotesModel note = NotesModel(audioRecords: [], images: []);
+  NotesModel note = NotesModel(audioRecords: [], images: [], color: "#ffffff");
   Directory appDirectory;
   Color colorMic = Colors.blue;
   final focusNodeHandler = [FocusNode(), FocusNode()];
   final picker = ImagePicker();
+  String test = "ttet";
 
   @override
   void initState() {
@@ -153,12 +156,43 @@ class _NoteEditorState extends State<NoteEditor> {
                                   })
                                 })
                       }),
+            ),
+            SizedBox(width: 10),
+            Container(
+              child: FloatingActionButton(
+                  heroTag: "btn3",
+                  backgroundColor: Colors.blue,
+                  elevation: 1.0,
+                  child: new Icon(Icons.color_lens_outlined, size: 35),
+                  onPressed: () => showGeneralDialog(
+                        barrierLabel: "Label",
+                        barrierDismissible: true,
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        transitionDuration: Duration(milliseconds: 300),
+                        context: context,
+                        pageBuilder: (context, anim1, anim2) => DialogColor(
+                          callBack: (color) => {
+                            setState(() {
+                              note.color = color;
+                            })
+                          },
+                        ),
+                        transitionBuilder: (context, anim1, anim2, child) {
+                          return SlideTransition(
+                            position:
+                                Tween(begin: Offset(0, 1), end: Offset(0, 0))
+                                    .animate(anim1),
+                            child: child,
+                          );
+                        },
+                      )),
             )
           ],
         ),
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
+      backgroundColor: HexColor(note.color),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
@@ -178,7 +212,8 @@ class _NoteEditorState extends State<NoteEditor> {
                         hintText: 'Title',
                         hintStyle: Theme.of(context).textTheme.headline2),
                   )
-                : Text(note.title,style: Theme.of(context).textTheme.headline2),
+                : Text(note.title,
+                    style: Theme.of(context).textTheme.headline2),
             TextFormField(
               initialValue: note.description,
               focusNode: focusNodeHandler[1],

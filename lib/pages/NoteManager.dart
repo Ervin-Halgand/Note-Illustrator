@@ -6,9 +6,11 @@ import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:note_illustrator/components/ImageListView.dart';
 import 'package:note_illustrator/components/RecordListView.dart';
+import 'package:note_illustrator/constants/appConstant.dart';
 import 'package:note_illustrator/models/NotesModel.dart';
 import 'package:note_illustrator/services/AudioRecorder.dart';
 import 'package:note_illustrator/services/DataBase.dart';
+import 'package:note_illustrator/widgets/DialogColor.dart';
 import 'package:note_illustrator/widgets/DialogPhoto.dart';
 import 'package:path_provider/path_provider.dart';
 import '../widgets/NotesPage.dart';
@@ -30,7 +32,7 @@ class NoteManager extends StatefulWidget {
 class _NoteManagerState extends State<NoteManager> {
   AudioRecorder recorder = AudioRecorder();
   AudioPlayer audioPlayer = AudioPlayer();
-  NotesModel note = NotesModel(audioRecords: [], images: []);
+  NotesModel note = NotesModel(audioRecords: [], images: [], color: "#ffffff");
   Directory appDirectory;
   Color colorMic = Colors.blue;
   final focusNodeHandler = [FocusNode(), FocusNode()];
@@ -98,13 +100,17 @@ class _NoteManagerState extends State<NoteManager> {
                         }
                       else if (note.title == null && note.description != null)
                         {
-                          setState(() => {note.timestamp = timestamp, note.title = ""}),
+                          setState(() =>
+                              {note.timestamp = timestamp, note.title = ""}),
                           saveNote(),
                         }
                       else if (note.description == null && note.title != null)
                         {
                           note.description = "",
-                          setState(() => {note.timestamp = timestamp, note.description = ""}),
+                          setState(() => {
+                                note.timestamp = timestamp,
+                                note.description = ""
+                              }),
                           saveNote(),
                         },
                       Navigator.pop(context)
@@ -165,12 +171,43 @@ class _NoteManagerState extends State<NoteManager> {
                                   })
                                 })
                       }),
+            ),
+            SizedBox(width: 10),
+            Container(
+              child: FloatingActionButton(
+                  heroTag: "btn3",
+                  backgroundColor: Colors.blue,
+                  elevation: 1.0,
+                  child: new Icon(Icons.color_lens_outlined, size: 35),
+                  onPressed: () => showGeneralDialog(
+                        barrierLabel: "Label",
+                        barrierDismissible: true,
+                        barrierColor: Colors.black.withOpacity(0.5),
+                        transitionDuration: Duration(milliseconds: 300),
+                        context: context,
+                        pageBuilder: (context, anim1, anim2) => DialogColor(
+                          callBack: (color) => {
+                            setState(() {
+                              note.color = color;
+                            })
+                          },
+                        ),
+                        transitionBuilder: (context, anim1, anim2, child) {
+                          return SlideTransition(
+                            position:
+                                Tween(begin: Offset(0, 1), end: Offset(0, 0))
+                                    .animate(anim1),
+                            child: child,
+                          );
+                        },
+                      )),
             )
           ],
         ),
       ),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterFloat,
+      backgroundColor: HexColor(note.color),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(

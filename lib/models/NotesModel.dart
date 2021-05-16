@@ -7,6 +7,7 @@ class NotesModel {
   String title = "";
   String description = "";
   String timestamp = "";
+  String color = "";
 
   NotesModel(
       {this.id,
@@ -14,8 +15,8 @@ class NotesModel {
       this.title,
       this.description,
       this.audioRecords,
-      this.images
-      });
+      this.images,
+      this.color});
 
   Map<String, dynamic> toMap() {
     return {
@@ -24,7 +25,8 @@ class NotesModel {
       'title': title,
       'description': description,
       'audioRecords': jsonEncode(audioRecords),
-      'images': jsonEncode(images)
+      'images': jsonEncode(images),
+      'color': color
     };
   }
 }
