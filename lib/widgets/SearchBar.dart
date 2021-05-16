@@ -234,21 +234,24 @@ class SearchResultsListView extends StatelessWidget {
 
     // final fsb = FloatingSearchBar.of(context);
     if (noteSearchedList != null && noteSearchedList.isNotEmpty) {
-      return Column(
-        children: [
-          SizedBox(
-            height: 55,
-          ),
-          GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            children: List.generate(noteSearchedList.length, (index) {
-              return Center(
-                child: noteList(noteSearchedList[index], index),
-              );
-            }),
-          ),
-        ],
+      return Scaffold(
+        bottomNavigationBar: BottomAppBarWidget(),
+        body: Column(
+          children: [
+            SizedBox(
+              height: 55,
+            ),
+            GridView.count(
+              crossAxisCount: 2,
+              shrinkWrap: true,
+              children: List.generate(noteSearchedList.length, (index) {
+                return Center(
+                  child: noteList(noteSearchedList[index], index),
+                );
+              }),
+            ),
+          ],
+        ),
       );
     } else
       return Center(child: Text("Add Notes..."));
