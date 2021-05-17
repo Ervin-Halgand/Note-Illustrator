@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:note_illustrator/constants/appConstant.dart';
 import 'package:note_illustrator/pages/NoteEdit.dart';
 import 'package:note_illustrator/widgets/BottomAppBar.dart';
 import 'package:note_illustrator/services/DataBase.dart';
@@ -80,7 +81,7 @@ class _HabitPageState extends State<HabitPage> with TickerProviderStateMixin {
                 width: 160,
                 height: 191,
                 decoration: BoxDecoration(
-                  color: noteColor[(index % noteColor.length).floor()],
+                  color: HexColor(note.color),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Center(
