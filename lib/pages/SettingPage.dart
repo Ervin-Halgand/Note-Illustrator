@@ -67,7 +67,8 @@ class _SettingPageState extends State<SettingPage> {
                       backgroundColor: Theme.of(context).primaryColor,
                       title: Center(child: Text('Updated')),
                     );
-                  })
+                  }),
+                  setState(() => user.userName = user.userName)
             },
           ),
           title: Align(
@@ -139,7 +140,7 @@ class _SettingPageState extends State<SettingPage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: TextFormField(
-                        onChanged: (value) => {user.userName = value},
+                        onChanged: (value) => {user.userName = value },
                         decoration: const InputDecoration(
                             labelText: 'Username',
                             labelStyle: TextStyle(
