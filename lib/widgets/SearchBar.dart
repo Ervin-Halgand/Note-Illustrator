@@ -221,9 +221,11 @@ class SearchResultsListView extends StatelessWidget {
       return Column(
         children: [
           SizedBox(height: 60.0),
-          SizedBox(
-              height: MediaQuery.of(context).size.height - 220,
-              child: DashBoardPage()),
+          Expanded(
+            child: SizedBox(
+                height: MediaQuery.of(context).size.height - 220,
+                child: DashBoardPage()),
+          ),
         ],
       );
     }
